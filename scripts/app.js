@@ -6,7 +6,7 @@ const card = document.querySelector('.card');
 const details = document.querySelector('.details');
 const time = document.querySelector('img.time');
 const icon = document.querySelector('.icon img');
-
+const forecast = new Forecast();
 
 // Function to update UI
 const updateUI = data => {
@@ -57,18 +57,18 @@ const updateUI = data => {
 
 
 // Because forecast.js comes before app.js in the html, we can use them here 
-const updateCity = async (city) => {
-    const cityDetails = await getCity(city);
-    const weather = await getWeather(cityDetails.Key);
+// const updateCity = async (city) => {
+//     const cityDetails = await getCity(city);
+//     const weather = await getWeather(cityDetails.Key);
 
 
-    // return {
-    //     city_Details: cityDetails,
-    //     weather_Details: weather
-    // }
-    // OR
-    return { cityDetails, weather }; // --> Object Shorthand Notation
-}
+//     // return {
+//     //     city_Details: cityDetails,
+//     //     weather_Details: weather
+//     // }
+//     // OR
+//     return { cityDetails, weather }; // --> Object Shorthand Notation
+// }
 
 cityForm.addEventListener('submit', e => {
     // Prevent default action
@@ -80,7 +80,7 @@ cityForm.addEventListener('submit', e => {
 
 
     // Update the UI with new City
-    updateCity(city)
+    forecast.updateCity(city)
         .then(data => updateUI(data))
         .catch(err => console.log(err));
 
@@ -89,7 +89,7 @@ cityForm.addEventListener('submit', e => {
 });
 
 if (localStorage.getItem('city')) {
-    updateCity(localStorage.getItem('city'))
+    forecast.updateCity(localStorage.getItem('city'))
         .then(data => updateUI(data))
         .catch(err => console.log(err))
-};
+}
